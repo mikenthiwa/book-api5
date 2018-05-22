@@ -1,17 +1,28 @@
 language: python
 python: 3.6.1
 
+
+env:
+  global:
+    - 1755f6a47b61616e18687add4c5b44fe8820a84ac1ecc73199160dfaf65620f3
 # install dependencies
 install:
   - pip install -r requirements/dev.txt
   - pip install flask_restplus
   - pip install codecov
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+
 # run scripts
 script:
   - coverage erase
   - coverage run -m unittest && coverage html
   - coverage report
+  - bundle exec rspec
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - codecov
