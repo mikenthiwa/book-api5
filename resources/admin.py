@@ -65,7 +65,7 @@ class BookLists(Resource):
         author = args['author']
         copies = args['copies']
         res = book.add_book(book_title=title, book_author=author, book_copies=copies)
-        return res
+        return res, 201
 
 class Book(Resource):
     req_parser = reqparse.RequestParser()
@@ -99,7 +99,7 @@ class Book(Resource):
             return copies_response
 
         else:
-            return {"At least one field is required"}
+            return {"msg": "At least one field is required"}
 
 api.add_resource(UserList, '/auth/users', endpoint='users')
 api.add_resource(User, '/auth/users/<int:user_id>')

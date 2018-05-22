@@ -25,7 +25,7 @@ class Books:
     def modify_book_title(self, book_id, title):
         book = self.books.get(book_id)
         new_title = book['Title'] = title
-        return {"msg": 'Tile modified to: {}'.format(new_title)}
+        return {"msg": 'Title modified to: {}'.format(new_title)}
 
 
     def modify_book_author(self, book_id, author):

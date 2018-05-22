@@ -12,6 +12,11 @@ class ConfigTestCase(unittest.TestCase):
         """Define test variables and initialize app"""
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
+        self.book = {"title": "Harry Potter",
+                    "author": "J.K Rowling",
+                    "copies": 10}
+
+        self.title = {"title": "Harry Potter and Chamber of Secrets"}
 
 if __name__ == '__main__':
     unittest.main()
