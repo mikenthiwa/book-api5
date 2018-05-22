@@ -101,6 +101,8 @@ class Book(Resource):
         else:
             return {"msg": "At least one field is required"}
 
+    
+
 api.add_resource(UserList, '/auth/users', endpoint='users')
 api.add_resource(User, '/auth/users/<int:user_id>')
 api.add_resource(BookLists, '/admin/books', endpoint='library')

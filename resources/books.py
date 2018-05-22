@@ -1,4 +1,4 @@
-from flask_restplus import Resource, Namespace, fields, reqparse
+from flask_restplus import Resource, Namespace
 from app.models import Books
 
 api = Namespace('Books', description='Books related operations')

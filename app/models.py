@@ -92,6 +92,11 @@ class Users:
         user['email'] = email
         return {"msg": 'email changed'}
 
+    def promote_user(self, user_id):
+        user = self.users.get(user_id)
+        user['admin'] = True
+        return {"msg": 'user is admin!'}
+
     def reset_password(self, user_id, password):
         user = self.users.get(user_id)
         user['password'] = password
