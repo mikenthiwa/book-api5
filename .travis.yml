@@ -19,10 +19,10 @@ script:
   - coverage erase
   - coverage run -m unittest && coverage html
   - coverage report
-  - bundle exec rspec
+
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAV
 
 after_success:
   - codecov
