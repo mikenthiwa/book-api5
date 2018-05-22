@@ -11,9 +11,9 @@ def create_app(config_name):
     api = Api(title='Book-API',
               version='1.0',
               description='Hello-Books is a simple api that helps manage a library and its processes'
-                          ' like stocking,tracking and renting books. With this application users are'
-                          ' able to find and rent books.The application also has an admin section where'
-                          ' the admin can do things like add books, delete books')
+                          ' like stocking,tracking and renting books.\n With this application users are'
+                          ' able to find and rent books. The application also has an admin section where'
+                          ' the admin\n can do things like add books, delete books')
 
     # Create flask app
     app = Flask(__name__, instance_relative_config=True)

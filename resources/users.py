@@ -1,7 +1,7 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users
 
-api = Namespace('Users', description='Users related operations')
+api = Namespace('signup and login', description='Users related operations')
 
 # model for book
 model_register = api.model('Register', {'username': fields.String,

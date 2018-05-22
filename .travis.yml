@@ -1,0 +1,16 @@
+language: python
+python: 3.6.1
+
+# install dependencies
+install:
+  -pip install -r requirements/dev.txt
+
+# run scripts
+script:
+  - coverage erase
+  - coverage run -m unittest && coverage html
+  - coverage report
+
+after_success:
+  - codecov
+
