@@ -1,3 +1,10 @@
 env.bat/
 .idea/*
 venv/*
+
+app/__pycache__/
+env.bat
+htmlcov/
+instance/__pycache__/
+resources/__pycache__/
+tests/__pycache__/
