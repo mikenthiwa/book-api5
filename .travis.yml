@@ -5,6 +5,7 @@ python: 3.6.1
 install:
   - pip install -r requirements/dev.txt
   - pip install flask_restplus
+  - pip install codecov
 
 # run scripts
 script:
