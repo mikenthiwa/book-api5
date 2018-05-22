@@ -1,5 +1,7 @@
+import os
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import jwt
+import datetime
 
 class Books:
     books = {1: {"Title": "Harry Potter", "Author": "J.K.Rowling", "Copies": 3},
@@ -41,8 +43,9 @@ class Books:
 
 class Users:
     users = {1: {"username": "mike.nthiwa","email": "mike.nthiwa@gmail.com",
-                 "password": "123456789"},
-             2: {"username": "reg.nthiwa", "email": "reg.nthiwa@gmail.com", "password": "123456789"}}
+                 "password": "123456789", "admin": False},
+             2: {"username": "reg.nthiwa", "email": "reg.nthiwa@gmail.com",
+                 "password": "123456789", "admin": False}}
 
 
     def get_all_users(self):
@@ -54,19 +57,25 @@ class Users:
         return response
 
     def login_user(self, email, password):
-        for user in self.users:
-            if self.users[user]['email'] != email:
-                return {'msg': 'invalid username'}
-            if self.users[user]['password'] != password:
+        for user_id in self.users:
+            if self.users[user_id]['email'] != email:
+
+                return {'msg': 'invalid email'}
+            if self.users[user_id]['password'] != password:
                 return {"msg": 'invalid password'}
+            user = self.users.get(user_id)
+            email = user['email']
+            token = jwt.encode(
+                {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                os.getenv("SECRET"))
+            return ({'token': token.decode('UTF-8')})
 
-            return {'msg': "logged in"}
 
-
-    def add_user(self, username, email, password):
+    def add_user(self, username, email, password, admin=False):
         new_id = len(self.users) + 1
         hashed_password = generate_password_hash(password=password, method='sha256')
-        self.users[new_id] = [{"username": username, "email": email, "password": hashed_password}]
+        self.users[new_id] = [{"username": username, "email": email,
+                               "password": hashed_password, "admin": admin}]
         return {"msg": 'user added'}
 
     def delete_user(self, user_id):
