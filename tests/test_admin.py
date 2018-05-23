@@ -19,7 +19,8 @@ class AdminEndPoint(ConfigTestCase):
         self.assertIn("book added", str(response.data))
 
     def test_modify_book_title(self):
-        response = self.client().put('/api/v1/admin/books/1', data=json.dumps(self.title),
+        title = {"title": "Harry Potter and Chamber of Secrets"}
+        response = self.client().put('/api/v1/admin/books/1', data=json.dumps(title),
                                      content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Title modified to", str(response.data))
@@ -44,6 +45,27 @@ class AdminEndPoint(ConfigTestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn("At least one field is required", str(response.data))
+
+    def test_get_all_users(self):
+        response = self.client().get('api/v1/auth/users')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_one_user(self):
+        response = self.client().get('api/v1/auth/users/1')
+        self.assertEqual(response.status_code, 200)
+
+    def test_reset_password(self):
+        passwd = {"password": "987456123"}
+        response = self.client().put('api/v1/auth/users/2',
+                                     data=json.dumps(passwd),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_user(self):
+        response = self.client().delete('api/v1/auth/users/3')
+        print(response.data)
+
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -45,6 +45,8 @@ class Users:
     users = {1: {"username": "mike.nthiwa","email": "mike.nthiwa@gmail.com",
                  "password": "123456789", "admin": False},
              2: {"username": "reg.nthiwa", "email": "reg.nthiwa@gmail.com",
+                 "password": "123456789", "admin": False},
+             3: {"username": "emma.nthiwa", "email": "emma.nthiwa@gmail.com",
                  "password": "123456789", "admin": False}}
 
 

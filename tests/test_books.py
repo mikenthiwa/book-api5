@@ -22,5 +22,12 @@ class BooksEndPoint(ConfigTestCase):
         response = self.client().get('/api/v1/books/1')
         self.assertEqual(response.status_code, 200)
 
+    def test_auth_user_borrows_book(self):
+        """Test API can authenticated users borrow book"""
+        response = self.client().get('api/v1/auth/users/books/1',
+                                     headers=self.user_header)
+        self.assertEqual(response.status_code, 200)
+
+
 if __name__ == '__main__':
     unittest.main()
