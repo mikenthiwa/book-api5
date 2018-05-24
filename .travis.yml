@@ -5,6 +5,7 @@ python: 3.6.1
 env:
   global:
     - 1755f6a47b61616e18687add4c5b44fe8820a84ac1ecc73199160dfaf65620f3
+
 # install dependencies
 install:
   - pip install -r requirements/dev.txt
