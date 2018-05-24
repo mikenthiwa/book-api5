@@ -28,8 +28,8 @@ class User(Resource):
         response = user.get_a_user(user_id=user_id)
         return response
 
-    @staticmethod
-    def delete(user_id):
+
+    def delete(self, user_id):
         """Delete user"""
         response = user.delete_user(user_id=user_id)
         return response
@@ -42,6 +42,13 @@ class User(Resource):
         parser.add_argument('password', required=True, help="No password provided", location=['json'])
         response = user.reset_password(user_id=user_id, password=api.payload['password'])
         return response
+
+    def patch(self, user_id):
+        """Update user to admin"""
+        response =  user.promote_user(user_id=user_id)
+        return response
+
+
 
 
 class BookLists(Resource):
@@ -101,9 +108,11 @@ class Book(Resource):
         else:
             return {"msg": "At least one field is required"}
 
+
     
 
 api.add_resource(UserList, '/auth/users', endpoint='users')
 api.add_resource(User, '/auth/users/<int:user_id>')
 api.add_resource(BookLists, '/admin/books', endpoint='library')
 api.add_resource(Book, '/admin/books/<int:book_id>')
+

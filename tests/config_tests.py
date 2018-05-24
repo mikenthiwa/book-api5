@@ -13,8 +13,8 @@ class ConfigTestCase(unittest.TestCase):
         """Define test variables and initialize app"""
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
-        self.book = {"title": "Harry Potter",
-                     "author": "J.K Rowling",
+        self.book = {"title": "Lone Wolf",
+                     "author": "David Archer",
                      "copies": 10}
 
         self.user = {"username": "chris.mutua",

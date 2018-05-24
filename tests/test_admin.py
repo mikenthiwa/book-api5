@@ -47,11 +47,11 @@ class AdminEndPoint(ConfigTestCase):
         self.assertIn("At least one field is required", str(response.data))
 
     def test_get_all_users(self):
-        response = self.client().get('api/v1/auth/users')
+        response = self.client().get('/api/v1/auth/users')
         self.assertEqual(response.status_code, 200)
 
     def test_get_one_user(self):
-        response = self.client().get('api/v1/auth/users/1')
+        response = self.client().get('/api/v1/auth/users/1')
         self.assertEqual(response.status_code, 200)
 
     def test_reset_password(self):
@@ -61,9 +61,10 @@ class AdminEndPoint(ConfigTestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
+
     def test_delete_user(self):
-        response = self.client().delete('api/v1/auth/users/3')
-        print(response.data)
+        response = self.client().delete('/api/v1/auth/users/3')
+        print(response.status_code)
 
 
 
