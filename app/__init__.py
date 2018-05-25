@@ -5,15 +5,15 @@ from resources.books import api as book
 from resources.users import api as users
 from resources.admin import api as admin
 
-
-
-def create_app(config_name):
-    api = Api(title='Book-API',
+api = Api(title='Book-API',
               version='1.0',
               description='Hello-Books is a simple api that helps manage a library and its processes'
                           ' like stocking,tracking and renting books.\n With this application users are'
                           ' able to find and rent books. The application also has an admin section where'
                           ' the admin\n can do things like add books, delete books')
+
+
+def create_app(config_name):
 
     # Create flask app
     app = Flask(__name__, instance_relative_config=True)
