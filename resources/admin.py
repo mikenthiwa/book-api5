@@ -67,7 +67,9 @@ class BookLists(Resource):
         title = args['title']
         author = args['author']
         copies = args['copies']
-        pass
+        response = Books.add_book(book_title=title, book_author=author,
+                                  book_copies=copies)
+        return response
 
 class Book(Resource):
     req_parser = reqparse.RequestParser()
