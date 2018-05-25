@@ -25,14 +25,12 @@ class User(Resource):
     @staticmethod
     def get(user_id):
         """Get one users by id"""
-        response = user.get_a_user(user_id=user_id)
-        return response
+        pass
 
 
     def delete(self, user_id):
         """Delete user"""
-        response = user.delete_user(user_id=user_id)
-        return response
+        pass
 
     @api.expect(model_reset_password)
     def put(self, user_id):
@@ -40,13 +38,11 @@ class User(Resource):
         parser = reqparse.RequestParser()
         # parser.add_argument('email', required=True, help="No email provided", location=['json'] )
         parser.add_argument('password', required=True, help="No password provided", location=['json'])
-        response = user.reset_password(user_id=user_id, password=api.payload['password'])
-        return response
+        pass
 
     def patch(self, user_id):
         """Update user to admin"""
-        response =  user.promote_user(user_id=user_id)
-        return response
+        pass
 
 
 
@@ -71,8 +67,7 @@ class BookLists(Resource):
         title = args['title']
         author = args['author']
         copies = args['copies']
-        res = book.add_book(book_title=title, book_author=author, book_copies=copies)
-        return res, 201
+        pass
 
 class Book(Resource):
     req_parser = reqparse.RequestParser()
@@ -94,16 +89,13 @@ class Book(Resource):
         copies = args['copies']
 
         if title:
-            title_response = book.modify_book_title(book_id=book_id, title=title)
-            return title_response
+            pass
 
         elif author:
-            author_response = book.modify_book_author(book_id=book_id, author=author)
-            return author_response
+            pass
 
         elif copies:
-            copies_response = book.modify_book_copies(book_id=book_id, copies=copies)
-            return copies_response
+            pass
 
         else:
             return {"msg": "At least one field is required"}

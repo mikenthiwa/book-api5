@@ -10,16 +10,14 @@ class BookLists(Resource):
 
     def get(self):
         """Get all books"""
-        res = book.get_all_books()
-        return res
+        pass
 
 
 
 class Book(Resource):
     def get(self, book_id):
         """Get one book"""
-        response = book.get_a_book(book_id=book_id)
-        return response
+        pass
 
 
 

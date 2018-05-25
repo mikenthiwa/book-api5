@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_restplus import Api
+from app.models import db
 from instance.config import app_config
 from resources.books import api as book
 from resources.users import api as users
 from resources.admin import api as admin
-
 
 
 def create_app(config_name):
@@ -25,13 +25,14 @@ def create_app(config_name):
     # Enable swagger editor
     app.config['SWAGGER_UI_JSONEDITOR'] = True
 
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.init_app(app)
+
     #  Register application
-    api.add_namespace(users, path='/api/v1')
-    api.add_namespace(book, path='/api/v1')
-    api.add_namespace(admin, path='/api/v1')
+    api.add_namespace(users, path='/api/v2')
+    api.add_namespace(book, path='/api/v2')
+    api.add_namespace(admin, path='/api/v2')
 
     api.init_app(app=app)
-
-
 
     return app
