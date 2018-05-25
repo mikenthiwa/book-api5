@@ -91,13 +91,16 @@ class Book(Resource):
         copies = args['copies']
 
         if title:
-            pass
+            response = Books.modify_book_title(book_id=book_id, title=title)
+            return response
 
         elif author:
-            pass
+            response = Books.modify_book_author(book_id=book_id, author=author)
+            return response
 
         elif copies:
-            pass
+            response = Books.modify_book_copies(book_id=book_id, copies=copies)
+            return response
 
         else:
             return {"msg": "At least one field is required"}

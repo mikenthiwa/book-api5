@@ -30,4 +30,33 @@ class AdminEndPoint(ConfigTestCase):
         """Test API can get one book"""
         response =  self.client().get('/api/v2/books/1')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(response.data)
+        self.assertIn("The Storm", str(response.data))
+
+    def test_modify_book_title(self):
+        """Test API can modify book title"""
+        title = {"title": "Harry Potter and Prisoner of Azkaban"}
+        response = self.client().put('/api/v2/admin/books/1', data=json.dumps(title),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('book title modified', str(response.data))
+
+    def test_modify_book_author(self):
+        """Test API can modify book title"""
+        author = {"author": "J.K Rowling"}
+        response = self.client().put('/api/v2/admin/books/1', data=json.dumps(author),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('book author modified', str(response.data))
+
+    def test_modify_book_copies(self):
+        """Test API can modify book copies"""
+        copies = {"copies": 50}
+        response = self.client().put('/api/v2/admin/books/1', data=json.dumps(copies),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('book copies modified', str(response.data))
+
+    def test_get_all_users(self):
+        """Test API can get all users"""
+        response = self.client().get('/api/v2/admin/users')
+        print(response.data)

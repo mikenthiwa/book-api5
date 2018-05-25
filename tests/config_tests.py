@@ -15,9 +15,8 @@ class ConfigTestCase(unittest.TestCase):
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
         self.book = {"title": "The Storm", "author": "Blake Banner", "copies": 8}
-        self.title = self.book["title"]
-        self.author = self.book["author"]
-        self.copies = self.book["copies"]
+        self.users = {"username": "mike.nthiwa", "email": "mike.nthiwa@gmail.com", "password": "123456789"}
+        self.admin = {"username": "admin", "email": "admin@gmail.com", "password": "123456789"}
         # binds the app to the current context
         with self.app.app_context():
             # create all tables
@@ -26,6 +25,14 @@ class ConfigTestCase(unittest.TestCase):
 
             self.client().post('/api/v2/admin/books',
                                data=json.dumps(self.book),
+                               content_type='application/json')
+
+            self.client().post('/api/v2/register',
+                               data=json.dumps(self.users),
+                               content_type='application/json')
+
+            self.client().post('/api/v2/register',
+                               data=json.dumps(self.admin),
                                content_type='application/json')
 
     def tearDown(self):

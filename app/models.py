@@ -69,11 +69,18 @@ class Books(db.Model):
             book.book_title = title
             db.session.commit()
             return {"msg": 'book title modified'}
+    @staticmethod
+    def modify_book_author(book_id, author):
+        """Method to modify book author in db"""
+        book = Books.query.get(book_id)
 
-    def modify_book_author(self, book_id, author):
-        book = self.books.get(book_id)
-        new_author = book['Author'] = author
-        return {"msg": 'author modified to: {}'.format(new_author)}
+        if book is None:
+            return {"msg": "book is not available"}
+
+        if author:
+            book.book_title = author
+            db.session.commit()
+            return {"msg": 'book author modified'}
 
     @staticmethod
     def modify_book_copies(book_id, copies):
@@ -85,7 +92,7 @@ class Books(db.Model):
 
         book.book_copies = copies
         db.session.commit()
-        return {"msg": 'book title modified'}
+        return {"msg": 'book copies modified'}
 
 
 class Users(db.Model):
