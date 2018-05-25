@@ -1,31 +1,16 @@
 language: python
-python: 3.6.1
+python: 3.6.4
 
-
-env:
-  global:
-    - 1755f6a47b61616e18687add4c5b44fe8820a84ac1ecc73199160dfaf65620f3
-
-# install dependencies
 install:
-  - pip install -r requirements/dev.txt
-  - pip install flask_restplus
-  - pip install codecov
-  - pip install pyjwt
+  - pip install -r requirements
+  - pip install coveralls
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-
-# run scripts
 script:
-  - coverage erase
-  - coverage run -m unittest && coverage html
-  - coverage report
-
-
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAV
+  - python -m pytest --cov-report term-missing --cov=resources
 
 after_success:
-  - codecov
+  - coveralls
+
+notifications:
+  - email: false
 
