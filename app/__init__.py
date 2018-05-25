@@ -8,7 +8,7 @@ from werkzeug.contrib.fixers import ProxyFix
 
 
 def create_app(config_name):
-app.wsgi_app = ProxyFix(app.wsgi_app)
+    app.wsgi_app = ProxyFix(app.wsgi_app)
     
     api = Api(title='Book-API',
               version='1.0',
