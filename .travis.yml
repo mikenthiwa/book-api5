@@ -8,11 +8,7 @@ env:
 
 # install dependencies
 install:
-  - pip install -r requirements/dev.txt
-  - pip install flask_restplus
-  - pip install codecov
-  - pip install pyjwt
-  - pip install flask-sqlalchemy
+  - pip install -r requirements
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
