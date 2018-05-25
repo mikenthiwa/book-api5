@@ -4,11 +4,12 @@ from instance.config import app_config
 from resources.books import api as book
 from resources.users import api as users
 from resources.admin import api as admin
-
-
+from werkzeug.contrib.fixers import ProxyFix
 
 
 def create_app(config_name):
+app.wsgi_app = ProxyFix(app.wsgi_app)
+    
     api = Api(title='Book-API',
               version='1.0',
               description='Hello-Books is a simple api that helps manage a library and its processes'
