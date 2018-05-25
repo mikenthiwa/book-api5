@@ -1,0 +1,17 @@
+[
+  "tests/test_admin.py::AdminEndPoint::test_add_book",
+  "tests/test_admin.py::AdminEndPoint::test_delete_user",
+  "tests/test_admin.py::AdminEndPoint::test_empty_field_modify_book_info",
+  "tests/test_admin.py::AdminEndPoint::test_get_all_users",
+  "tests/test_admin.py::AdminEndPoint::test_get_one_user",
+  "tests/test_admin.py::AdminEndPoint::test_modify_book_author",
+  "tests/test_admin.py::AdminEndPoint::test_modify_book_copies",
+  "tests/test_admin.py::AdminEndPoint::test_modify_book_title",
+  "tests/test_admin.py::AdminEndPoint::test_reset_password",
+  "tests/test_books.py::BooksEndPoint::test_auth_user_borrows_book",
+  "tests/test_books.py::BooksEndPoint::test_get_all_books",
+  "tests/test_books.py::BooksEndPoint::test_get_one_book",
+  "tests/test_signup.py::RegisterEndPoint::test_login",
+  "tests/test_signup.py::RegisterEndPoint::test_none_registered_user_login",
+  "tests/test_signup.py::RegisterEndPoint::test_sign_up"
+]
