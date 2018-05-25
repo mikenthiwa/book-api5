@@ -4,9 +4,7 @@ from instance.config import app_config
 from resources.books import api as book
 from resources.users import api as users
 from resources.admin import api as admin
-from werkzeug.contrib.fixers import ProxyFix
 
-app.wsgi_app = ProxyFix(app.wsgi_app)
 
 def create_app(config_name):
     
