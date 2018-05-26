@@ -1,3 +1,6 @@
+[![Coverage Status](https://coveralls.io/repos/github/mikenthiwa/book-api5/badge.svg?branch=apiv1)](https://coveralls.io/github/mikenthiwa/book-api5?branch=apiv1)
+[![Build Status](https://travis-ci.org/mikenthiwa/book-api5.svg?branch=apiv1)](https://travis-ci.org/mikenthiwa/book-api5)
+
 # book-api5
 
 Hello-Books is a simple api that helps manage a library and its processes like stocking,
