@@ -10,7 +10,7 @@ tracking and renting books. With this application users are able to find and ren
 The application also has an admin section where the admin can do things like add books, delete books,
 increase the quantity of a book etc.
 
-![Home Image](https://raw.github.com/mikenthiwa/book-api5/book-api5/Library.jpg)
+![Home Image](https://raw.github.com/mikenthiwa/book-api5/Library.jpg)
 
 
 ## Getting Started
