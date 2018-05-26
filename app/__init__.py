@@ -32,6 +32,4 @@ def create_app(config_name):
 
     api.init_app(app=app)
 
-
-
     return app
