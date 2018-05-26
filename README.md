@@ -1,5 +1,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/mikenthiwa/book-api5/badge.svg?branch=apiv1)](https://coveralls.io/github/mikenthiwa/book-api5?branch=apiv1)
 [![Build Status](https://travis-ci.org/mikenthiwa/book-api5.svg?branch=apiv1)](https://travis-ci.org/mikenthiwa/book-api5)
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # book-api5
 
@@ -7,6 +9,8 @@ Hello-Books is a simple api that helps manage a library and its processes like s
 tracking and renting books. With this application users are able to find and rent books.
 The application also has an admin section where the admin can do things like add books, delete books,
 increase the quantity of a book etc.
+
+![Home Image](https://raw.github.com/mikenthiwa/book-api5/book-api5/Library.jpg)
 
 
 ## Getting Started
