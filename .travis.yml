@@ -4,11 +4,12 @@ python: 3.6.1
 # install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
+
 
 before_script:
   - source ./.travis.sh
   - psql -c 'create database travis_tests;' -U postgres
-  - pip install coveralls
 
 # run scripts
 script:
