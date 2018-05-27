@@ -14,3 +14,4 @@ class BorrowedBookEndPoint(ConfigTestCase):
         response = self.client().get('/api/v2/auth/users/books/1', headers=self.user_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("The Storm", str(response.data))
+

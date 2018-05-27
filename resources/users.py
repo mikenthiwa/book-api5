@@ -57,10 +57,8 @@ class Login(Resource):
         return response
 
 
-
 class BorrowedBook(Resource):
     """Authenticated users to borrow a book"""
-
     @token_required
     def get(self, book_id):
         response = Books.get_a_book(book_id=book_id)

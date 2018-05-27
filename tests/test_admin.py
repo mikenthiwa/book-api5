@@ -93,3 +93,5 @@ class AdminEndPoint(ConfigTestCase):
         response = self.client().delete('/api/v2/admin/users/1')
         self.assertEqual(response.status_code, 200)
         self.assertIn("user deleted", str(response.data))
+
+
