@@ -1,5 +1,6 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from resources.auth import token_required
+from app.models import Users, Books
 
 api = Namespace('signup and login', description='Users related operations')
 
@@ -34,8 +35,10 @@ class Register(Resource):
         email = args['email']
         password = args['password']
 
+        response = Users.add_user(username=username, email=email, password=password)
+        return response
 
-        pass
+
 
 
 class Login(Resource):
@@ -50,7 +53,9 @@ class Login(Resource):
         args = api.payload
         email = args['email']
         password = args['password']
-        pass
+        response = Users.login_user(email=email, password=password)
+        return response
+
 
 
 class BorrowedBook(Resource):
@@ -58,7 +63,8 @@ class BorrowedBook(Resource):
 
     @token_required
     def get(self, book_id):
-        pass
+        response = Books.get_a_book(book_id=book_id)
+        return response
 
 
 api.add_resource(Register, '/register', endpoint='register')

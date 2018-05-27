@@ -69,6 +69,7 @@ class Books(db.Model):
             book.book_title = title
             db.session.commit()
             return {"msg": 'book title modified'}
+
     @staticmethod
     def modify_book_author(book_id, author):
         """Method to modify book author in db"""
@@ -120,8 +121,8 @@ class Users(db.Model):
         return {"Users": output}
 
     @staticmethod
-    def get_a_user(public_id):
-        user = Users.query.filter_by(public_id=public_id).first()
+    def get_a_user(id):
+        user = Users.query.filter_by(id=id).first()
 
         if user is None:
             return {'msg': 'user does not exist'}
@@ -129,11 +130,11 @@ class Users(db.Model):
         return {"username": user.username, "public_id": user.id, "admin": user.admin, "password": user.password}
 
     @staticmethod
-    def login_user(username, password):
-        user = Users.query.filter_by(username=username).first()
+    def login_user(email, password):
+        user = Users.query.filter_by(email=email).first()
         # no username provide
         if not user:
-            return {"msg": "username is not available"}
+            return {"msg": "email is not available"}
 
         # check password
         if check_password_hash(user.password, password):
@@ -153,8 +154,8 @@ class Users(db.Model):
         return {"msg": "user crested"}
 
     @staticmethod
-    def delete_user(public_id):
-        user = Users.query.filter_by(public_id=public_id).first()
+    def delete_user(user_id):
+        user = Users.query.filter_by(id=user_id).first()
         if user is None:
             return {'msg': 'user does not exist'}
         db.session.delete(user)
@@ -179,8 +180,8 @@ class Users(db.Model):
         return {"msg": 'email changed'}
 
     @staticmethod
-    def promote_user(public_id):
-        user = Users.query.filter_by(public_id=public_id).first()
+    def promote_user(user_id):
+        user = Users.query.filter_by(id=user_id).first()
 
         if user is None:
             return {'msg': 'user does not exist'}
@@ -189,11 +190,11 @@ class Users(db.Model):
         user.admin = True
         db.session.commit()
 
-        return {"username": user.username, "public_id": user.public_id,
-                "admin": user.admin, "password": user.password}
+        return {"msg": "user has been promoted"}
 
-    def reset_password(self, public_id, password):
-        user = Users.query.filter_by(public_id=public_id).first()
+    @staticmethod
+    def reset_password(id, password):
+        user = Users.query.filter_by(id=id).first()
         if user is None:
             return {'msg': 'user does not exist'}
         user.password = password

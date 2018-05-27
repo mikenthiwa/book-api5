@@ -9,28 +9,29 @@ model_book = api.model('Book', {'title': fields.String,
                                 'author': fields.String,
                                 'copies': fields.Integer})
 
-user = Users()
-book = Books()
-
 
 class UserList(Resource):
     @staticmethod
     def get():
         """Get all users"""
-        response = user.get_all_users()
+        response = Users.get_all_users()
         return response
+
 
 
 class User(Resource):
     @staticmethod
     def get(user_id):
         """Get one users by id"""
-        pass
+        response = Users.get_a_user(id=user_id)
+        return response
 
 
     def delete(self, user_id):
         """Delete user"""
-        pass
+        response = Users.delete_user(user_id=user_id)
+        return response
+
 
     @api.expect(model_reset_password)
     def put(self, user_id):
@@ -38,11 +39,14 @@ class User(Resource):
         parser = reqparse.RequestParser()
         # parser.add_argument('email', required=True, help="No email provided", location=['json'] )
         parser.add_argument('password', required=True, help="No password provided", location=['json'])
-        pass
+        args = parser.parse_args()
+        response = Users.reset_password(id=user_id, password=args['password'])
+        return response
 
     def patch(self, user_id):
         """Update user to admin"""
-        pass
+        response = Users.promote_user(user_id=user_id)
+        return response
 
 
 
@@ -108,8 +112,8 @@ class Book(Resource):
 
     
 
-api.add_resource(UserList, '/auth/users', endpoint='users')
-api.add_resource(User, '/auth/users/<int:user_id>')
+api.add_resource(UserList, '/admin/users', endpoint='users')
+api.add_resource(User, '/admin/users/<int:user_id>')
 api.add_resource(BookLists, '/admin/books', endpoint='library')
 api.add_resource(Book, '/admin/books/<int:book_id>')
 

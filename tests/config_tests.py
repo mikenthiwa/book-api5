@@ -17,6 +17,12 @@ class ConfigTestCase(unittest.TestCase):
         self.book = {"title": "The Storm", "author": "Blake Banner", "copies": 8}
         self.users = {"username": "mike.nthiwa", "email": "mike.nthiwa@gmail.com", "password": "123456789"}
         self.admin = {"username": "admin", "email": "admin@gmail.com", "password": "123456789"}
+
+        self.user_cred = {"email": "mike.nthiwa@gmail.com",
+                          "password": "123456789"}
+
+        self.admin_cred = {"email": "admin@gmail.com",
+                           "password": "123456789"}
         # binds the app to the current context
         with self.app.app_context():
             # create all tables
@@ -34,6 +40,21 @@ class ConfigTestCase(unittest.TestCase):
             self.client().post('/api/v2/register',
                                data=json.dumps(self.admin),
                                content_type='application/json')
+
+            user_response = self.client().post('/api/v2/login', data=json.dumps(self.user_cred),
+                                               content_type='application/json')
+            admin_response = self.client().post('/api/v2/login', data=json.dumps(self.admin_cred),
+                                               content_type='application/json')
+
+            user_token_dict = json.loads(user_response.get_data(as_text=True))
+            admin_token_dict = json.loads(admin_response.get_data(as_text=True))
+
+            user_token = user_token_dict["token"]
+            admin_token = admin_token_dict['token']
+
+            self.user_header = {"Content-Type": "application/json", "x-access-token": user_token}
+            self.admin_header = {"Content-Type": "application/json", "x-access-token": admin_token}
+
 
     def tearDown(self):
         """teardown all initialized variables."""

@@ -5,12 +5,16 @@ python: 3.6.1
 install:
   - pip install -r requirements.txt
 
+before_script:
+  - source ./.travis.sh
+  - psql -c 'create database travis_tests;' -U postgres
+
 # run scripts
 script:
-  - coverage erase
-  - coverage run -m unittest && coverage html
-  - coverage report
+  - python -m pytest --cov-report term-missing --cov=resources
 
 after_success:
-  - codecov
+  - coveralls
 
+notifications:
+  - email: false

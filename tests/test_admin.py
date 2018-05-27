@@ -56,7 +56,40 @@ class AdminEndPoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('book copies modified', str(response.data))
 
+    def test_modify_book_info(self):
+        """Test API can return reslt if no book info is provided"""
+        book_info = {}
+        response = self.client().put('/api/v2/admin/books/1', data=json.dumps(book_info),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("At least one field is required", str(response.data))
+
     def test_get_all_users(self):
         """Test API can get all users"""
         response = self.client().get('/api/v2/admin/users')
-        print(response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_a_user(self):
+        """Test API can get a user"""
+        response =  self.client().get('/api/v2/admin/users/1')
+        self.assertEqual(response.status_code, 200)
+
+    def test_reset_password(self):
+        """Test API can reset password"""
+        password = {"password": "987654321"}
+        response = self.client().put('/api/v2/admin/users/1', data=json.dumps(password),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("password changed!", str(response.data))
+
+    def test_promote_user(self):
+        """Test API can promote user"""
+        response = self.client().patch('/api/v2/admin/users/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("user has been promoted", str(response.data))
+
+    def test_delete_user(self):
+        """Test API can delete a user"""
+        response = self.client().delete('/api/v2/admin/users/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("user deleted", str(response.data))
