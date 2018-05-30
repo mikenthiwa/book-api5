@@ -32,6 +32,12 @@ class AdminEndPoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("The Storm", str(response.data))
 
+        """Test API if book is not available"""
+        response_1 = self.client().get('/api/v2/books/2')
+        self.assertIn("book is not available", str(response_1.data))
+        self.assertEqual(response_1.status_code, 200)
+
+
     def test_modify_book_title(self):
         """Test API can modify book title"""
         title = {"title": "Harry Potter and Prisoner of Azkaban"}
