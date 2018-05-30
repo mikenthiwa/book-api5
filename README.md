@@ -52,3 +52,5 @@ Virtual environment:
 
 
 ## Running the test
+
+* Run test using coverage run -m unittests or pytest
