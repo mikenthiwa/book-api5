@@ -18,7 +18,7 @@ class TestingConfig(Config):
     """Configurations for Testing."""
     TESTING = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:bit221510@localhost/test-book-api5'
+    SQLALCHEMY_DATABASE_URI = os.getenv('TESTING_DATABASE_URI')
 
 
 class StagingConfig(Config):
