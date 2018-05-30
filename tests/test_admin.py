@@ -32,6 +32,10 @@ class AdminEndPoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("The Storm", str(response.data))
 
+        """Test API if no book is provided"""
+        response_1 = self.client().get('/api/v2/books/2')
+        self.assertIn("book is not available", str(response_1.data))
+
     def test_modify_book_title(self):
         """Test API can modify book title"""
         title = {"title": "Harry Potter and Prisoner of Azkaban"}
@@ -93,5 +97,4 @@ class AdminEndPoint(ConfigTestCase):
         response = self.client().delete('/api/v2/admin/users/1')
         self.assertEqual(response.status_code, 200)
         self.assertIn("user deleted", str(response.data))
-
 
