@@ -71,7 +71,8 @@ class AdminEndPoint(ConfigTestCase):
     def test_delete_book(self):
         """Test API can delete book"""
         response = self.client().delete('/api/v2/admin/books/1')
-        print(response.status_code)
+        self.assertIn("book successfully deleted", str(response.data))
+        self.assertEqual(response.status_code, 200)
 
 
     def test_get_all_users(self):

@@ -110,7 +110,9 @@ class Book(Resource):
             return {"msg": "At least one field is required"}
 
 
-    
+    def delete(self, book_id):
+        response = Books.delete_book(book_id=book_id)
+        return response
 
 api.add_resource(UserList, '/admin/users', endpoint='users')
 api.add_resource(User, '/admin/users/<int:user_id>')
