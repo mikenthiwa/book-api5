@@ -56,6 +56,7 @@ class Books(db.Model):
         book = Books.query.get(book_id)
         db.session.delete(book)
         db.session.commit()
+        return {"msg": "book successfully deleted"}
 
     @staticmethod
     def modify_book_title(book_id, title):

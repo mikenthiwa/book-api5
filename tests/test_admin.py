@@ -61,12 +61,18 @@ class AdminEndPoint(ConfigTestCase):
         self.assertIn('book copies modified', str(response.data))
 
     def test_modify_book_info(self):
-        """Test API can return reslt if no book info is provided"""
+        """Test API can return result if no book info is provided"""
         book_info = {}
         response = self.client().put('/api/v2/admin/books/1', data=json.dumps(book_info),
                                      content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn("At least one field is required", str(response.data))
+
+    def test_delete_book(self):
+        """Test API can delete book"""
+        response = self.client().delete('/api/v2/admin/books/1')
+        print(response.status_code)
+
 
     def test_get_all_users(self):
         """Test API can get all users"""
