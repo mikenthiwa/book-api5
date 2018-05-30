@@ -1,9 +1,12 @@
 import os
+from werkzeug.contrib.fixers import ProxyFix
 from app import create_app
+
 
 
 config_name = os.getenv("APP_SETTINGS")
 app = create_app(config_name)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
