@@ -8,3 +8,4 @@ htmlcov/
 instance/__pycache__/
 resources/__pycache__/
 tests/__pycache__/
+.pytest_cache/*
