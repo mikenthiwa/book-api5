@@ -44,6 +44,11 @@ class AdminEndPoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('book title modified', str(response.data))
 
+        """Test if book is not available"""
+        response_2 = self.client().put('/api/v2/admin/books/3', data=json.dumps(title),
+                                     content_type='application/json')
+        self.assertIn("book is not available", str(response_2.data))
+
     def test_modify_book_author(self):
         """Test API can modify book title"""
         author = {"author": "J.K Rowling"}
@@ -52,6 +57,10 @@ class AdminEndPoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('book author modified', str(response.data))
 
+        """Test if book is not available"""
+        response_2 = self.client().put('/api/v2/admin/books/3', data=json.dumps(author), content_type='application/json')
+        self.assertIn("book is not available", str(response_2.data))
+
     def test_modify_book_copies(self):
         """Test API can modify book copies"""
         copies = {"copies": 50}
@@ -59,6 +68,11 @@ class AdminEndPoint(ConfigTestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn('book copies modified', str(response.data))
+
+        """Test if book is not available"""
+        response_2 = self.client().put('/api/v2/admin/books/3', data=json.dumps(copies),
+                                       content_type='application/json')
+        self.assertIn("book is not available", str(response_2.data))
 
     def test_modify_book_info(self):
         """Test API can return result if no book info is provided"""
@@ -85,6 +99,11 @@ class AdminEndPoint(ConfigTestCase):
         response =  self.client().get('/api/v2/admin/users/1')
         self.assertEqual(response.status_code, 200)
 
+        """Test API if it can get a user that is not available"""
+        response_1 = self.client().get('/api/v2/admin/users/6')
+        self.assertIn("user does not exist", str(response_1.data))
+        self.assertEqual(response_1.status_code, 200)
+
     def test_reset_password(self):
         """Test API can reset password"""
         password = {"password": "987654321"}
@@ -93,15 +112,32 @@ class AdminEndPoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("password changed!", str(response.data))
 
+        """Test if user is not available"""
+        response_2 = self.client().put('/api/v2/admin/users/8', data=json.dumps(password),
+                                     content_type='application/json')
+        self.assertIn("user does not exist", str(response_2.data))
+
+
+
     def test_promote_user(self):
         """Test API can promote user"""
         response = self.client().patch('/api/v2/admin/users/1')
         self.assertEqual(response.status_code, 200)
         self.assertIn("user has been promoted", str(response.data))
 
+        """Test if user is not available"""
+        response_2 = self.client().patch('/api/v2/admin/users/8')
+        self.assertIn("user does not exist", str(response_2.data))
+
     def test_delete_user(self):
         """Test API can delete a user"""
         response = self.client().delete('/api/v2/admin/users/1')
         self.assertEqual(response.status_code, 200)
         self.assertIn("user deleted", str(response.data))
+
+        """Test API can delete a user that does not exists"""
+        response = self.client().delete('/api/v2/admin/users/13')
+        self.assertIn("user does not exist", str(response.data))
+
+
 

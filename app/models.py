@@ -135,7 +135,7 @@ class Users(db.Model):
         user = Users.query.filter_by(email=email).first()
         # no username provide
         if not user:
-            return {"msg": "email is not available"}
+            return {"msg": "email is not available"}, 401
 
         # check password
         if check_password_hash(user.password, password):
@@ -143,7 +143,7 @@ class Users(db.Model):
                 {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                 os.getenv("SECRET"))
             return {'token': token.decode('UTF-8')}
-        return {"msg": "password do not match"}
+        return {"msg": "password do not match"}, 401
 
     @classmethod
     def add_user(cls, username, email, password, admin=False):
@@ -164,16 +164,17 @@ class Users(db.Model):
         return {"msg": "user deleted"}
 
     @staticmethod
-    def modify_username(public_id, username):
-        user = Users.query.filter_by(public_id=public_id).first()
+    def modify_username(user_id, username):
+        user = Users.query.filter_by(id=user_id).first()
         if user is None:
             return {'msg': 'user does not exist'}
         user.username = username
         db.session.commit()
         return {"msg": 'username changed'}
 
-    def modify_email(self, public_id, email):
-        user = Users.query.filter_by(public_id=public_id).first()
+    @staticmethod
+    def modify_email(user_id, email):
+        user = Users.query.filter_by(id=user_id).first()
         if user is None:
             return {'msg': 'user does not exist'}
         user.email = email
