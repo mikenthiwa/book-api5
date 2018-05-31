@@ -117,6 +117,7 @@ class Users(db.Model):
             user_data['username'] = user.username
             user_data['email'] = user.email
             user_data['password'] = user.password
+            user_data['admin'] = user.admin
             output.append(user_data)
 
         return {"Users": output}
@@ -140,7 +141,7 @@ class Users(db.Model):
         # check password
         if check_password_hash(user.password, password):
             token = jwt.encode(
-                {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                {'public_id': user.public_id, 'admin': user.admin, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                 os.getenv("SECRET"))
             return {'token': token.decode('UTF-8')}
         return {"msg": "password do not match"}, 401
@@ -152,7 +153,16 @@ class Users(db.Model):
                        admin=admin)
         db.session.add(new_user)
         db.session.commit()
-        return {"msg": "user crested"}
+        return {"msg": "user created"}
+
+    @classmethod
+    def create_admin(cls, username, email, password, admin=True):
+        hashed_password = generate_password_hash(password, method='sha256')
+        new_user = cls(public_id=str(uuid.uuid4()), username=username, email=email, password=hashed_password,
+                       admin=admin)
+        db.session.add(new_user)
+        db.session.commit()
+        return {"msg": "user created"}
 
     @staticmethod
     def delete_user(user_id):

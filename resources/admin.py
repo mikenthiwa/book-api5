@@ -1,5 +1,6 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users, Books
+from resources.auth import token_required, admin_required
 
 api = Namespace('Admin', description='Admin related operations')
 
@@ -11,16 +12,19 @@ model_book = api.model('Book', {'title': fields.String,
 
 
 class UserList(Resource):
+
     @staticmethod
+    @admin_required
     def get():
         """Get all users"""
         response = Users.get_all_users()
         return response
 
 
-
 class User(Resource):
+
     @staticmethod
+
     def get(user_id):
         """Get one users by id"""
         response = Users.get_a_user(id=user_id)
@@ -32,8 +36,8 @@ class User(Resource):
         response = Users.delete_user(user_id=user_id)
         return response
 
-
     @api.expect(model_reset_password)
+
     def put(self, user_id):
         """Reset password"""
         parser = reqparse.RequestParser()
@@ -43,12 +47,11 @@ class User(Resource):
         response = Users.reset_password(id=user_id, password=args['password'])
         return response
 
+
     def patch(self, user_id):
         """Update user to admin"""
         response = Users.promote_user(user_id=user_id)
         return response
-
-
 
 
 class BookLists(Resource):
@@ -74,6 +77,7 @@ class BookLists(Resource):
         response = Books.add_book(book_title=title, book_author=author,
                                   book_copies=copies)
         return response
+
 
 class Book(Resource):
     req_parser = reqparse.RequestParser()
@@ -111,11 +115,12 @@ class Book(Resource):
 
 
     def delete(self, book_id):
+        """Delete book"""
         response = Books.delete_book(book_id=book_id)
         return response
+
 
 api.add_resource(UserList, '/admin/users', endpoint='users')
 api.add_resource(User, '/admin/users/<int:user_id>')
 api.add_resource(BookLists, '/admin/books', endpoint='library')
 api.add_resource(Book, '/admin/books/<int:book_id>')
-
