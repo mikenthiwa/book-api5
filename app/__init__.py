@@ -8,8 +8,6 @@ from resources.admin import api as admin
 from resources.users import api as users
 
 
-
-
 def create_app(config_name):
 
     # Expect token in api_doc
