@@ -9,13 +9,16 @@ model_register = api.model('Register', {'username': fields.String,
                                         'email': fields.String,
                                         'password': fields.String})
 
+# model for login
 model_login = api.model('Login', {'email': fields.String,
                                   'password': fields.String})
 
+# model for resetting password
 model_reset_password = api.model('Reset', {'password': fields.String})
 
 
 class Register(Resource):
+    """class contain POST method"""
     parser = reqparse.RequestParser()
     parser.add_argument('username', required=True, help="No username provided", location=['json'])
 
@@ -37,6 +40,7 @@ class Register(Resource):
 
 
 class Login(Resource):
+    """class contain post method"""
     req_data = reqparse.RequestParser()
     req_data.add_argument('email', required=True, help='username required', location=['json'])
 
@@ -53,7 +57,8 @@ class Login(Resource):
 
 
 class BorrowedBook(Resource):
-    """Authenticated users to borrow a book"""
+    """class contains GET method
+    Authenticated users to borrow a book"""
     @api.doc(security='apikey')
     @token_required
     def get(self, book_id):
