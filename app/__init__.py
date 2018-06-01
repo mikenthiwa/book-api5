@@ -7,18 +7,15 @@ from resources.reg_login import api as user
 from resources.admin import api as admin
 from resources.users import api as users
 
-authorizations = {
-    'apikey':
-        {'type': 'apiKey',
-         'in': 'header',
-         'name': 'x-access-token'
-         }
-}
+
 
 
 def create_app(config_name):
 
-    # Expect token
+    # Expect token in api_doc
+    authorizations = {'apikey': {'type': 'apiKey',
+                                 'in': 'header',
+                                 'name': 'x-access-token'}}
 
     # Create flask app
     app = Flask(__name__, instance_relative_config=True)
@@ -40,6 +37,7 @@ def create_app(config_name):
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    # initialise db
     db.init_app(app)
 
     #  Register application
@@ -47,59 +45,5 @@ def create_app(config_name):
     api.add_namespace(book, path='/api/v2')
     api.add_namespace(admin, path='/api/v2')
     api.add_namespace(users, path='/api/v2')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # api.init_app(app=app)
 
     return app
