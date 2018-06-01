@@ -92,7 +92,7 @@ class AdminEndPoint(ConfigTestCase):
 
     def test_get_all_users(self):
         """Test API can get all users"""
-        response = self.client().get('/api/v2/admin/users', headers=self.admin_header)
+        response = self.client().get('/api/v2/admin/users', headers=self.user2_header)
         print(response.data)
         # self.assertEqual(response.status_code, 200)
 
