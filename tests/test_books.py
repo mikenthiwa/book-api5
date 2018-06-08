@@ -10,6 +10,7 @@ from tests.config_tests import ConfigTestCase
 
 class BorrowedBookEndPoint(ConfigTestCase):
     """This class represents borrowed book test cases """
+
     def test_borrowed_book(self):
         """Test API can access protected route using a token"""
         response = self.client().get('/api/v2/auth/users/books/1', headers=self.user_header)
@@ -27,7 +28,5 @@ class BorrowedBookEndPoint(ConfigTestCase):
         user_header = {"Content-Type": "application/json"}
         response = self.client().get('/api/v2/auth/users/books/1', headers=user_header)
         self.assertIn("token missing", str(response.data))
-
-
 
 

@@ -1,5 +1,6 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users
+from resources.auth import token_required
 
 api = Namespace('Users', description='Users related operations')
 
@@ -13,6 +14,8 @@ class User(Resource):
     req_data.add_argument('email', type=str, required=False, location=['json'])
 
     @api.expect(model_modify_info)
+    @api.doc(security='apikey')
+    @token_required
     def put(self, user_id):
         """Modify user info {username and email}"""
         args = self.req_data.parse_args(strict=True)

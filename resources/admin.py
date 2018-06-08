@@ -1,6 +1,6 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users, Books
-from resources.auth import admin_required
+from resources.auth import admin_required, token_required
 
 api = Namespace('Admin', description='Admin related operations')
 
@@ -14,6 +14,7 @@ model_book = api.model('Book', {'title': fields.String,
 class UserList(Resource):
     """class contains GET method"""
     @staticmethod
+    @api.doc(security='apikey')
     @admin_required
     def get():
         """Get all users"""
@@ -24,18 +25,24 @@ class UserList(Resource):
 class User(Resource):
     """class contains GET, DELETE, PUT and PATCH methods"""
     @staticmethod
+    @api.doc(security='apikey')
+    @admin_required
     def get(user_id):
         """Get one users by id"""
         response = Users.get_a_user(id=user_id)
         return response
 
     @staticmethod
+    @api.doc(security='apikey')
+    @admin_required
     def delete(user_id):
         """Delete user"""
         response = Users.delete_user(user_id=user_id)
         return response
 
     @api.expect(model_reset_password)
+    @api.doc(security='apikey')
+    @token_required
     def put(self, user_id):
         """Reset password"""
         parser = reqparse.RequestParser()
@@ -46,6 +53,7 @@ class User(Resource):
         return response
 
     @staticmethod
+    @admin_required
     def patch(user_id):
         """Update user to admin"""
         response = Users.promote_user(user_id=user_id)
@@ -66,6 +74,8 @@ class BookLists(Resource):
                             help='book copies is not provided', location=['json'])
 
     @api.expect(model_book)
+    @api.doc(security='apikey')
+    @admin_required
     def post(self):
         """Add book"""
         args = self.req_parser.parse_args()
@@ -87,6 +97,8 @@ class Book(Resource):
     req_parser.add_argument('copies', type=int, required=False, location=['json'])
 
     @api.expect(model_book)
+    @api.doc(security='apikey')
+    @admin_required
     def put(self, book_id):
         """ modify book information"""
         args = self.req_parser.parse_args(strict=True)
@@ -110,6 +122,8 @@ class Book(Resource):
             return {"msg": "At least one field is required"}
 
     @staticmethod
+    @api.doc(security='apikey')
+    @admin_required
     def delete(book_id):
         """Delete book"""
         response = Books.delete_book(book_id=book_id)

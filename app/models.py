@@ -104,7 +104,7 @@ class Users(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
-    admin = db.Column(db.Boolean)
+    admin = db.Column(db.Boolean, default=False)
 
     @staticmethod
     def get_all_users():
@@ -147,22 +147,14 @@ class Users(db.Model):
         return {"msg": "password do not match"}, 401
 
     @classmethod
-    def add_user(cls, username, email, password, admin=False):
+    def add_user(cls, username, email, password):
         hashed_password = generate_password_hash(password, method='sha256')
-        new_user = cls(public_id=str(uuid.uuid4()), username=username, email=email, password=hashed_password,
-                       admin=admin)
+        new_user = cls(public_id=str(uuid.uuid4()), username=username, email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return {"msg": "user created"}
 
-    @classmethod
-    def create_admin(cls, username, email, password, admin=True):
-        hashed_password = generate_password_hash(password, method='sha256')
-        new_user = cls(public_id=str(uuid.uuid4()), username=username, email=email, password=hashed_password,
-                       admin=admin)
-        db.session.add(new_user)
-        db.session.commit()
-        return {"msg": "user created"}
+
 
     @staticmethod
     def delete_user(user_id):

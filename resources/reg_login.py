@@ -35,7 +35,7 @@ class Register(Resource):
         email = args['email']
         password = args['password']
 
-        response = Users.add_user(username=username, email=email, password=password, admin=False)
+        response = Users.add_user(username=username, email=email, password=password)
         return response
 
 
