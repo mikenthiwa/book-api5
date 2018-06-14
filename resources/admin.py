@@ -52,6 +52,7 @@ class User(Resource):
 
 
 class BookLists(Resource):
+    """Contains POST method"""
 
     req_parser = reqparse.RequestParser()
 
