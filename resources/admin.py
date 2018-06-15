@@ -1,5 +1,6 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users, Books
+from resources.auth import admin_required
 
 api = Namespace('Admin', description='Admin related operations')
 
@@ -66,6 +67,7 @@ class BookLists(Resource):
                             help='book copies is not provided', location=['json'])
 
     @api.expect(model_book)
+
     def post(self):
         """Add book"""
         args = self.req_parser.parse_args()

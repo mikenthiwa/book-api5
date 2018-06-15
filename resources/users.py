@@ -1,5 +1,5 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
-from app.models import Users, Books
+from app.models import Users, Books, users_db
 from resources.auth import token_required
 
 api = Namespace('signup and login', description='Users related operations')
@@ -41,19 +41,21 @@ class Register(Resource):
 
 
 class Login(Resource):
-    req_data = reqparse.RequestParser()
-    req_data.add_argument('email', required=True, help='username required', location=['json'])
+    parser = reqparse.RequestParser()
+    parser.add_argument('email', required=True, help='email required', location=['json'])
 
-    req_data.add_argument('password', required=True, help='password required', location=['json'])
+    parser.add_argument('password', required=True, help='password required', location=['json'])
 
     @api.expect(model_login)
     def post(self):
         """Login user"""
-        args = api.payload
+        args = self.parser.parse_args()
         email = args['email']
         password = args['password']
-        response = user.login_user(email=email, password=password)
-        return response
+
+        for userid in users_db:
+            return users_db
+
 
 
 class BorrowedBook(Resource):

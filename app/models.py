@@ -3,9 +3,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 import datetime
 
+users_db = {1: {"username": "mike", "email": "mike@gmail.com", "password":"123"},
+            2: {"username": "reg", "email": "reg@gmail.com", "password": "123"}}
+
+
 class Books:
-    books = {1: {"Title": "Harry Potter", "Author": "J.K.Rowling", "Copies": 3},
-             2: {"Title": "The whistler", "Author": "John Grisham", "Copies": 3}}
+    books = {}
 
     def get_all_books(self):
         response = self.books
@@ -42,67 +45,53 @@ class Books:
 
 
 class Users:
-    users = {1: {"username": "mike.nthiwa","email": "mike.nthiwa@gmail.com",
-                 "password": "123456789", "admin": False},
-             2: {"username": "reg.nthiwa", "email": "reg.nthiwa@gmail.com",
-                 "password": "123456789", "admin": False},
-             3: {"username": "emma.nthiwa", "email": "emma.nthiwa@gmail.com",
-                 "password": "123456789", "admin": False}}
-
 
     def get_all_users(self):
-        response = self.users
+        response = users_db
         return response
 
     def get_a_user(self, user_id):
-        response = self.users.get(user_id)
+        response = users_db.get(user_id)
         return response
-
-    def login_user(self, email, password):
-        for user_id in self.users:
-            if self.users[user_id]['email'] != email:
-
-                return {'msg': 'invalid email'}
-            if self.users[user_id]['password'] != password:
-                return {"msg": 'invalid password'}
-            user = self.users.get(user_id)
-            email = user['email']
-            token = jwt.encode(
-                {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
-                os.getenv("SECRET"))
-            return ({'token': token.decode('UTF-8')})
 
 
     def add_user(self, username, email, password, admin=False):
-        new_id = len(self.users) + 1
+        new_id = len(users_db) + 1
         hashed_password = generate_password_hash(password=password, method='sha256')
-        self.users[new_id] = [{"username": username, "email": email,
-                               "password": hashed_password, "admin": admin}]
+        users_db[new_id] = {"username": username, "email": email,
+                               "password": hashed_password, "admin": admin}
+
         return {"msg": 'user added'}
 
+
     def delete_user(self, user_id):
-        del self.users[user_id]
+        del users_db[user_id]
         return {"msg": 'user deleted'}
 
     def modify_username(self, user_id, username):
-        user = self.users.get(user_id)
+        user = users_db.get(user_id)
         user['username'] = username
         return {"msg": 'username changed'}
 
     def modify_email(self, user_id, email):
-        user = self.users.get(user_id)
+        user = users_db.get(user_id)
         user['email'] = email
         return {"msg": 'email changed'}
 
     def promote_user(self, user_id):
-        user = self.users.get(user_id)
+        user = users_db.get(user_id)
         user['admin'] = True
         return {"msg": 'user is admin!'}
 
     def reset_password(self, user_id, password):
-        user = self.users.get(user_id)
+        user = users_db.get(user_id)
         user['password'] = password
         return {"msg": "password changed!"}
 
 
+    def create_admin(self, username, email, password, admin=True):
+        new_id = len(users_db) + 1
+        hashed_password = generate_password_hash(password=password, method='sha256')
+        users_db[str(new_id)] = {"username": username, "email": email, "password": hashed_password, "admin": admin}
+        return {"msg": "admin created"}
 
